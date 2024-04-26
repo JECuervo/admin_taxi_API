@@ -1,4 +1,4 @@
-# Configuraciones iniciales
+/* Configuraciones iniciales */
 PRAGMA foreign_keys = ON;
 
 
@@ -88,8 +88,6 @@ CREATE TABLE IF  NOT EXISTS kilometraje(
     km REAL,
     estado INTEGER REFERENCES binaria(valor)
 );
-
-drop TABLE mantenimientos;
 
 CREATE TABLE IF  NOT EXISTS mantenimientos(
     placa TEXT REFERENCES taxis(placa),
