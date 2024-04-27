@@ -41,12 +41,12 @@ CREATE TABLE IF NOT EXISTS taxis (
     total_km REAL NOT NULL DEFAULT 0,
     inicial_km REAL NOT NULL,
     km_cambio_aceite REAL NOT NULL, 
-    estado INTEGER NOT NULL REFERENCES binaria(valor),
+    estado INTEGER NOT NULL REFERENCES binaria(valor) DEFAULT 1,
     inicio_admin TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS usuarios (
-    id INTEGER PRIMARY KEY,
+    id INTEGER a PRIMARY KEY,
     cel INTEGER NOT NULL UNIQUE,
     nombre TEXT
 );
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS ingresos(
 );
 
 CREATE TABLE IF NOT EXISTS gastos(
-    id_gastos INTEGER PRIMARY KEY,
+    id_gasto INTEGER PRIMARY KEY,
     placa TEXT REFERENCES taxis(placa),
     fecha TEXT,
     valor REAL,
@@ -78,21 +78,21 @@ CREATE TABLE IF NOT EXISTS gastos(
 );
 
 CREATE TABLE IF NOT EXISTS facturas(
-    id_gastos INTEGER REFERENCES gastos(id_gastos),
+    id_gasto INTEGER REFERENCES gastos(id_gasto),
     imagen BLOB
 );
 
 CREATE TABLE IF  NOT EXISTS kilometraje(
     placa TEXT REFERENCES taxis(placa),
-    fecha TEXT,
-    km REAL,
+    fecha TEXT NOT NULL,
+    km REAL NOT NULL,
     estado INTEGER REFERENCES binaria(valor)
 );
 
 CREATE TABLE IF  NOT EXISTS mantenimientos(
     placa TEXT REFERENCES taxis(placa),
-    total_km REAL,
-    servicio TEXT,
+    total_km REAL NOT NULL,
+    servicio TEXT NOT NULL,
     vencido INTEGER REFERENCES binaria(valor) DEFAULT 0
 );
 
@@ -137,8 +137,8 @@ CREATE TRIGGER actualizar_total_km_update
     AFTER UPDATE ON taxis
 BEGIN
     UPDATE taxis SET total_km = inicial_km + (
-            SELECT sum(km) FROM kilometraje 
-                WHERE new.placa=kilometraje.placa
+            SELECT ifnull(sum(km),0) FROM kilometraje 
+                WHERE new.placa=kilometraje.placa     
         )
         WHERE new.placa=taxis.placa;
 END;
@@ -147,7 +147,7 @@ CREATE TRIGGER actualizar_total_km_insert
     AFTER INSERT ON taxis
 BEGIN
     UPDATE taxis SET total_km = inicial_km + (
-            SELECT sum(km) FROM kilometraje 
+            SELECT ifnull(sum(km),0) FROM kilometraje 
                 WHERE new.placa=kilometraje.placa
         )
         WHERE new.placa=taxis.placa;
