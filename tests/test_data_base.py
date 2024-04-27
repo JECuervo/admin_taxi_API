@@ -19,4 +19,19 @@ def test_create_data_base():
 
     cursor.executescript(sql)
 
+    db.close()
+    assert True
+
+
+def test_consistency_data():
+
+    dir_database = os.path.join(TEMPORAL_DIR, TEST_DATABASE)
+    db = sqlite3.connect(dir_database)
+    cursor = db.cursor()
+
+    with open(SYNTHETIC_INFORMATION_SQL) as file:
+        sql = "".join(file.readlines())
+
+    cursor.executescript(sql)
+    db.close()
     assert True
