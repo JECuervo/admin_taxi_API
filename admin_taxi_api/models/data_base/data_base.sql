@@ -5,11 +5,11 @@ PRAGMA foreign_keys = ON;
 /* Tablas para valores fijos */
 
 CREATE TABLE IF NOT EXISTS tipos_gastos(
-    tipos TEXT PRIMARY KEY
+    tipo TEXT PRIMARY KEY
 );
-INSERT INTO tipos_gastos(tipos) values ('fijo mensual');
-INSERT INTO tipos_gastos(tipos) values ('fijo anual');
-INSERT INTO tipos_gastos(tipos) values ('arreglo');
+INSERT INTO tipos_gastos(tipo) values ('fijo mensual');
+INSERT INTO tipos_gastos(tipo) values ('fijo anual');
+INSERT INTO tipos_gastos(tipo) values ('arreglo');
 
 CREATE TABLE IF NOT EXISTS binaria(
     valor INTEGER PRIMARY KEY
@@ -53,19 +53,22 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 CREATE TABLE IF NOT EXISTS administradores(
     id INTEGER REFERENCES usuarios(id),
-    placa TEXT REFERENCES taxis(placa)
+    placa TEXT REFERENCES taxis(placa),
+    CONSTRAINT pk PRIMARY KEY(id, placa)
 );
 
 CREATE TABLE IF NOT EXISTS visualizadores(
     id INTEGER REFERENCES usuarios(id),
     placa TEXT REFERENCES taxis(placa),
-    permisos TEXT REFERENCES permisos(valor)
+    permisos TEXT REFERENCES permisos(valor),
+    CONSTRAINT pk PRIMARY KEY(id, placa)
 );
 
 CREATE TABLE IF NOT EXISTS ingresos(
     placa TEXT REFERENCES taxis(placa),
     fecha TEXT,
-    valor REAL
+    valor REAL,
+    CONSTRAINT pk PRIMARY KEY(placa, fecha)
 );
 
 CREATE TABLE IF NOT EXISTS gastos(
@@ -73,11 +76,12 @@ CREATE TABLE IF NOT EXISTS gastos(
     placa TEXT REFERENCES taxis(placa),
     fecha TEXT,
     valor REAL,
-    tipo TEXT,
+    tipo TEXT REFERENCES tipos_gastos(tipo),
     descripcion TEXT
 );
 
 CREATE TABLE IF NOT EXISTS facturas(
+    id INTEGER PRIMARY KEY,
     id_gasto INTEGER REFERENCES gastos(id_gasto),
     imagen BLOB
 );
@@ -86,13 +90,14 @@ CREATE TABLE IF  NOT EXISTS kilometraje(
     placa TEXT REFERENCES taxis(placa),
     fecha TEXT NOT NULL,
     km REAL NOT NULL,
-    estado INTEGER REFERENCES binaria(valor)
+    estado INTEGER REFERENCES binaria(valor),
+    CONSTRAINT pk PRIMARY KEY(placa, fecha)
 );
 
 CREATE TABLE IF  NOT EXISTS mantenimientos(
     placa TEXT REFERENCES taxis(placa),
     total_km REAL NOT NULL,
-    servicio TEXT NOT NULL,
+    servicio TEXT NOT NULL PRIMARY KEY,
     vencido INTEGER REFERENCES binaria(valor) DEFAULT 0
 );
 
