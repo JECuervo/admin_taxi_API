@@ -1,7 +1,7 @@
 import sqlite3
 import os
 import shutil
-from resources.constants import *
+from .resources.constants import *
 
 if os.path.exists(TEMPORAL_DIR):
     shutil.rmtree(TEMPORAL_DIR)
