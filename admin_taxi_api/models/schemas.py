@@ -1,4 +1,4 @@
-from pydantic import BaseModel, SecretStr, Base64Bytes
+from pydantic import BaseModel, SecretStr, Base64Bytes, ConfigDict
 from datetime import date
 
 
@@ -14,8 +14,7 @@ class SuperUserCreate(SuperUserBase):
 class SuperUser(SuperUserBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class TaxiBase(BaseModel):
@@ -40,8 +39,8 @@ class AdministradorCreate(AdministradorBase):
 
 
 class Administrador(AdministradorBase):
-    class Config:
-        orm_mode = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class VisualizadorBase(BaseModel):
@@ -55,8 +54,7 @@ class VisualizadorCreate(VisualizadorBase):
 
 
 class Visualizador(VisualizadorBase):
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class IngresoBase(BaseModel):
@@ -70,8 +68,7 @@ class IngresoCreate(IngresoBase):
 
 
 class Ingreso(IngresoBase):
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class FacturaBase(BaseModel):
@@ -86,8 +83,7 @@ class FacturaCreate(FacturaBase):
 class Factura(FacturaBase):
     id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class GastoBase(BaseModel):
@@ -106,8 +102,7 @@ class Gasto(GastoBase):
     id_gasto: int
     facturas: list[Factura] = []
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class KilometrajeBase(BaseModel):
@@ -122,8 +117,7 @@ class KilometrajeCreate(KilometrajeBase):
 
 
 class Kilometraje(KilometrajeBase):
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MantenimientoBase(BaseModel):
@@ -138,8 +132,7 @@ class MantenimientoCreate(MantenimientoBase):
 
 
 class Mantenimiento(MantenimientoBase):
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class GpsTaxiBase(BaseModel):
@@ -154,8 +147,7 @@ class GpsTaxiCreate(GpsTaxiBase):
 
 
 class GpsTaxi(GpsTaxiBase):
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UsuarioBase(BaseModel):
@@ -172,8 +164,7 @@ class Usuario(UsuarioBase):
     administradores: list[Administrador] = []
     visualizadores: list[Visualizador] = []
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Taxi(TaxiBase):
@@ -186,5 +177,4 @@ class Taxi(TaxiBase):
     mantenimientos: list[Mantenimiento] = []
     gps: GpsTaxi
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
