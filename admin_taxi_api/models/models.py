@@ -5,7 +5,7 @@ from sqlalchemy import (
     Integer,
     String,
     Float,
-    Time,
+    Date,
     BLOB,
     PrimaryKeyConstraint,
 )
@@ -33,7 +33,7 @@ class Taxi(Base):
     inicial_km = Column(Float)
     km_cambio_aceite = Column(Float)
     estado = Column(Boolean, ForeignKey("binaria.valor"))
-    inicio_admin = Column(Time)
+    inicio_admin = Column(Date)
 
     administradores = relationship("Administrador", back_populates="taxi")
     visualizadores = relationship("Visualizador", back_populates="taxi")
@@ -84,7 +84,7 @@ class Ingreso(Base):
     __tablename__ = "ingresos"
 
     placa = Column(String, ForeignKey("taxis.placa"))
-    fecha = Column(Time)
+    fecha = Column(Date)
     valor = Column(Float)
 
     __table_args__ = (PrimaryKeyConstraint("placa", "fecha", name="pk"),)
@@ -97,7 +97,7 @@ class Gasto(Base):
 
     id_gasto = Column(Integer, primary_key=True)
     placa = Column(String, ForeignKey("taxis.placa"))
-    fecha = Column(Time)
+    fecha = Column(Date)
     valor = Column(Float)
     tipo = Column(String, ForeignKey("tipos_gastos.tipo"))
     descripcion = Column(String)
@@ -120,7 +120,7 @@ class Kilometraje(Base):
     __tablename__ = "kilometraje"
 
     placa = Column(String, ForeignKey("taxis.placa"))
-    fecha = Column(Time)
+    fecha = Column(Date)
     km = Column(Float)
     estado = Column(Boolean, ForeignKey("binaria.valor"))
 
