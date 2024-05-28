@@ -27,14 +27,14 @@ INSERT INTO permisos(valor) values ('reporte');
 /* Tablas para logica de la app */
 
 CREATE TABLE IF NOT EXISTS app_admin (
-    id INTEGER PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY,
     cel INTEGER NOT NULL UNIQUE, 
     usuario TEXT NOT NULL UNIQUE, 
     password TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS taxis (
-    placa TEXT PRIMARY KEY,
+    placa TEXT NOT NULL PRIMARY KEY,
     lateral TEXT NOT NULL UNIQUE, 
     i_dia_corriente REAL NOT NULL, 
     i_dia_festivo REAL NOT NULL, 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS taxis (
 );
 
 CREATE TABLE IF NOT EXISTS usuarios (
-    id INTEGER a PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY,
     cel INTEGER NOT NULL UNIQUE,
     nombre TEXT
 );
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS ingresos(
 );
 
 CREATE TABLE IF NOT EXISTS gastos(
-    id_gasto INTEGER PRIMARY KEY,
+    id_gasto INTEGER NOT NULL PRIMARY KEY,
     placa TEXT REFERENCES taxis(placa),
     fecha TEXT,
     valor REAL,
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS gastos(
 );
 
 CREATE TABLE IF NOT EXISTS facturas(
-    id INTEGER PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY,
     id_gasto INTEGER REFERENCES gastos(id_gasto),
     imagen BLOB
 );
