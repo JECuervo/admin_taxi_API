@@ -1,3 +1,7 @@
+"""
+module with the database models
+"""
+
 from sqlalchemy import (
     Boolean,
     Column,
@@ -14,6 +18,11 @@ from .data_base.database import Base
 
 
 class AppAdmin(Base):
+    """
+    Table admin user from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "app_admin"
 
     id = Column(Integer, primary_key=True)
@@ -23,6 +32,11 @@ class AppAdmin(Base):
 
 
 class Taxi(Base):
+    """
+    Table taxi from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "taxis"
 
     placa = Column(String, primary_key=True)
@@ -45,6 +59,11 @@ class Taxi(Base):
 
 
 class Usuario(Base):
+    """
+    Table Usuarios from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "usuarios"
 
     id = Column(Integer, primary_key=True)
@@ -56,6 +75,11 @@ class Usuario(Base):
 
 
 class Administrador(Base):
+    """
+    Table Administradores from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "administradores"
 
     id = Column(Integer, ForeignKey("usuarios.id"))
@@ -68,6 +92,11 @@ class Administrador(Base):
 
 
 class Visualizador(Base):
+    """
+    Table Visualizadores from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "visualizadores"
 
     id = Column(Integer, ForeignKey("usuarios.id"))
@@ -81,6 +110,11 @@ class Visualizador(Base):
 
 
 class Ingreso(Base):
+    """
+    Table Ingresos from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "ingresos"
 
     placa = Column(String, ForeignKey("taxis.placa"))
@@ -93,6 +127,11 @@ class Ingreso(Base):
 
 
 class Gasto(Base):
+    """
+    Table gastos from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "gastos"
 
     id_gasto = Column(Integer, primary_key=True)
@@ -107,6 +146,11 @@ class Gasto(Base):
 
 
 class Factura(Base):
+    """
+    Table facturas from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "facturas"
 
     id = Column(Integer, primary_key=True)
@@ -117,6 +161,11 @@ class Factura(Base):
 
 
 class Kilometraje(Base):
+    """
+    Table kilometraje from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "kilometraje"
 
     placa = Column(String, ForeignKey("taxis.placa"))
@@ -130,6 +179,11 @@ class Kilometraje(Base):
 
 
 class Mantenimiento(Base):
+    """
+    Table mantenimientos from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "mantenimientos"
 
     placa = Column(String, ForeignKey("taxis.placa"))
@@ -141,6 +195,11 @@ class Mantenimiento(Base):
 
 
 class GpsTaxi(Base):
+    """
+    Table gps_taxis from
+    admin_taxi_api/models/data_base/data_base.sql
+    """
+
     __tablename__ = "gps_taxis"
 
     placa = Column(String, ForeignKey("taxis.placa"), primary_key=True)
