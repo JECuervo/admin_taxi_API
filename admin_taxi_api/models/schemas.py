@@ -1,23 +1,36 @@
-from pydantic import BaseModel, SecretStr, Base64Bytes, ConfigDict
+"""
+Pydantic Models for database
+admin_taxi_api/models/data_base/data_base.sql
+"""
+
 from datetime import date
+from pydantic import BaseModel, SecretStr, Base64Bytes, ConfigDict
 
 
 class SuperUserBase(BaseModel):
+    """_"""
+
     cel: int
     usuario: str
 
 
 class SuperUserCreate(SuperUserBase):
+    """_"""
+
     password: str
 
 
 class SuperUser(SuperUserBase):
+    """_"""
+
     id: int
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class TaxiBase(BaseModel):
+    """_"""
+
     placa: str
     lateral: str
     i_dia_corriente: float
@@ -30,63 +43,79 @@ class TaxiBase(BaseModel):
 
 
 class AdministradorBase(BaseModel):
+    """_"""
+
     id: int
     placa: str
 
 
 class AdministradorCreate(AdministradorBase):
-    pass
+    """_"""
 
 
 class Administrador(AdministradorBase):
+    """_"""
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class VisualizadorBase(BaseModel):
+    """_"""
+
     id: int
     placa: str
     permisos: str
 
 
 class VisualizadorCreate(VisualizadorBase):
-    pass
+    """_"""
 
 
 class Visualizador(VisualizadorBase):
+    """_"""
+
     model_config = ConfigDict(from_attributes=True)
 
 
 class IngresoBase(BaseModel):
+    """_"""
+
     placa: str
     fecha: date
     valor: float
 
 
 class IngresoCreate(IngresoBase):
-    pass
+    """_"""
 
 
 class Ingreso(IngresoBase):
+    """_"""
+
     model_config = ConfigDict(from_attributes=True)
 
 
 class FacturaBase(BaseModel):
+    """_"""
+
     id_gasto: int
     imagen: Base64Bytes
 
 
 class FacturaCreate(FacturaBase):
-    pass
+    """_"""
 
 
 class Factura(FacturaBase):
-    id: int
+    """_"""
 
+    id: int
     model_config = ConfigDict(from_attributes=True)
 
 
 class GastoBase(BaseModel):
+    """_"""
+
     placa: str
     fecha: date
     valor: float
@@ -95,10 +124,12 @@ class GastoBase(BaseModel):
 
 
 class GastoCreate(GastoBase):
-    pass
+    """_"""
 
 
 class Gasto(GastoBase):
+    """_"""
+
     id_gasto: int
     facturas: list[Factura] = []
 
@@ -106,6 +137,8 @@ class Gasto(GastoBase):
 
 
 class KilometrajeBase(BaseModel):
+    """_"""
+
     placa: str
     fecha: str
     km: str
@@ -113,14 +146,18 @@ class KilometrajeBase(BaseModel):
 
 
 class KilometrajeCreate(KilometrajeBase):
-    pass
+    """_"""
 
 
 class Kilometraje(KilometrajeBase):
+    """_"""
+
     model_config = ConfigDict(from_attributes=True)
 
 
 class MantenimientoBase(BaseModel):
+    """_"""
+
     placa: str
     total_km: float
     servicio: str
@@ -128,14 +165,18 @@ class MantenimientoBase(BaseModel):
 
 
 class MantenimientoCreate(MantenimientoBase):
-    pass
+    """_"""
 
 
 class Mantenimiento(MantenimientoBase):
+    """_"""
+
     model_config = ConfigDict(from_attributes=True)
 
 
 class GpsTaxiBase(BaseModel):
+    """_"""
+
     placa: str
     url_aplicacion: str
     usuario: SecretStr
@@ -143,23 +184,29 @@ class GpsTaxiBase(BaseModel):
 
 
 class GpsTaxiCreate(GpsTaxiBase):
-    pass
+    """_"""
 
 
 class GpsTaxi(GpsTaxiBase):
+    """_"""
+
     model_config = ConfigDict(from_attributes=True)
 
 
 class UsuarioBase(BaseModel):
+    """_"""
+
     cel: int
     nombre: str
 
 
 class UsuarioCreate(UsuarioBase):
-    pass
+    """_"""
 
 
 class Usuario(UsuarioBase):
+    """_"""
+
     id: int
     administradores: list[Administrador] = []
     visualizadores: list[Visualizador] = []
@@ -168,6 +215,7 @@ class Usuario(UsuarioBase):
 
 
 class Taxi(TaxiBase):
+    """_"""
 
     administradores: list[Administrador] = []
     visualizadores: list[Visualizador] = []
